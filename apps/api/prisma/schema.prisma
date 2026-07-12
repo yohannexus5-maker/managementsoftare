@@ -3,11 +3,7 @@ generator client {
 }
 
 datasource db {
-  // Local dev uses SQLite for a zero-install setup. Swap to "postgresql" + a
-  // DATABASE_URL pointing at a real Postgres instance for production — the
-  // schema below avoids native `enum` (unsupported on SQLite) on purpose so
-  // this switch does not require touching model definitions.
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

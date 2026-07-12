@@ -1,7 +1,10 @@
 import axios from "axios";
 
+// Local dev proxies /api to the Express server (see vite.config.ts). In
+// production the frontend and API are on different hosts, so a real URL
+// must be supplied via VITE_API_BASE_URL (e.g. https://apms-api.onrender.com/api).
 export const api = axios.create({
-  baseURL: "/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "/api",
   withCredentials: true,
 });
 

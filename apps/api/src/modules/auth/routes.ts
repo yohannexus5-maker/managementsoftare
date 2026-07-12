@@ -16,8 +16,12 @@ const isProd = process.env.NODE_ENV === "production";
 function setRefreshCookie(res: import("express").Response, token: string) {
   res.cookie(REFRESH_COOKIE, token, {
     httpOnly: true,
+    // Frontend (Netlify) and API (Render) are on different origins in
+    // production, so the refresh cookie must be sameSite=none + secure —
+    // browsers silently drop cross-site cookies otherwise. "lax" is fine
+    // for local dev where both run on localhost.
     secure: isProd,
-    sameSite: "lax",
+    sameSite: isProd ? "none" : "lax",
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: "/api/auth",
   });
